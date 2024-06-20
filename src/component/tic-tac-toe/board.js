@@ -3,17 +3,21 @@ import Square from "./square";
 import './tictactoe.css';
 
 function Board({xIsNext, Squares, onPlay}){
+    // 處理方塊點擊事件
     const handleClick=(i)=>{
+        // 如果已經有贏家或方塊已被點擊，則返回
         if (calculateWinner(Squares)|| Squares[i]){
             return;
         };
+        // 創建一個 Squares 的副本並更新點擊的方塊
         const nextSquares = Squares.slice();
             nextSquares[i]= xIsNext ? "X" : "O";
         onPlay(nextSquares);
     };
 
-
+// 計算贏家函數
 const calculateWinner = (Squares) =>{
+    // 贏家組合
     const lines=[
         [0, 1, 2],
         [3, 4, 5],
@@ -24,6 +28,7 @@ const calculateWinner = (Squares) =>{
         [0, 4, 8],
         [2, 4, 6]
     ];
+    // 檢查每一種贏家組合
     for (let i = 0; i< lines.length; i++){
         const [a, b, c] = lines[i];
         if(Squares[a] && Squares[a] === Squares[b] && Squares[a] === Squares[c]){
@@ -33,7 +38,7 @@ const calculateWinner = (Squares) =>{
 
     return null;
 };
-
+ // 計算當前的贏家
 const winner = calculateWinner(Squares);
 let status;
 if(winner){
